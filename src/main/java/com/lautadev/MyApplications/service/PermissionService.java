@@ -21,7 +21,7 @@ public class PermissionService implements IPermissionService{
     }
 
     @Override
-    public List<Permission> getPermission() {
+    public List<Permission> getPermissions() {
         return permissionRepository.findAll();
     }
 

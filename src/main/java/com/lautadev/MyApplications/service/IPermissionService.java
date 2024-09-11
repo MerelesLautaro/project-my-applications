@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IPermissionService {
     public void savePermission(Permission permission);
-    public List<Permission> getPermission();
+    public List<Permission> getPermissions();
     public Optional<Permission> findPermission(Long id);
     public void deletePermission(Long id);
     public void editPermission(Long id,Permission permission);
