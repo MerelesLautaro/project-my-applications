@@ -21,6 +21,8 @@ public class Application {
     private String company;
     private String location;
     private String modality;
+    private String position;
+    private String workSchedule;
     private LocalDate dateOfApplication;
     private String description;
     @ManyToOne
