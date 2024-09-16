@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/role")
+@PreAuthorize("permitAll()")
 public class RoleController {
     @Autowired
     private IRoleService roleService;

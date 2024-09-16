@@ -23,7 +23,7 @@ public class SelJobScraperComputrabajo {
         private String description;
     */
 
-    public static void main(String[] args) {
+        public static void scraperComputrabajo() {
         System.setProperty("webdriver.edge.driver", "D:/escritorio/project MyApplications/webDriver/msedgedriver.exe");
         WebDriver driver = new EdgeDriver();
 

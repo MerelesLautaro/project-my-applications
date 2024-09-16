@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -65,5 +62,19 @@ public class RoleService implements IRoleService{
         NullAwareBeanUtils.copyNonNullProperties(role,roleEdit);
 
         return this.saveRole(roleEdit);
+    }
+
+    @Override
+    public Set<Role> findRoleByName(String name) {
+        List<Role> allRoles = this.getRoles();
+        Set<Role> containRole = new HashSet<>();
+
+        for(Role role: allRoles){
+            if(Objects.equals(role.getRole(), name)){
+                containRole.add(role);
+            }
+        }
+
+        return containRole;
     }
 }

@@ -22,7 +22,7 @@ public class SelJobScraperZonajobsBumeran {
         private LocalDate dateOfApplication;
         private String description;
     */
-    public static void main(String[] args) {
+    public static void ScraperZonaJobsBumeran() {
         System.setProperty("webdriver.edge.driver", "D:/escritorio/project MyApplications/webDriver/msedgedriver.exe");
         WebDriver driver = new EdgeDriver();
 

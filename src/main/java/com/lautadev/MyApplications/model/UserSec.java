@@ -19,6 +19,7 @@ public class UserSec {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String lastname;
     private String email;
     @OneToOne
     private Account account;

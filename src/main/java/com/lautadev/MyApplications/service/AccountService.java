@@ -1,6 +1,7 @@
 package com.lautadev.MyApplications.service;
 
 import com.lautadev.MyApplications.model.Account;
+import com.lautadev.MyApplications.model.LinkedInUserInfo;
 import com.lautadev.MyApplications.model.Role;
 import com.lautadev.MyApplications.repository.IAccountRepository;
 import com.lautadev.MyApplications.throwable.EntityNotFoundException;
@@ -8,6 +9,7 @@ import com.lautadev.MyApplications.util.NullAwareBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository accountRepository;
@@ -66,6 +69,20 @@ public class AccountService implements IAccountService {
         NullAwareBeanUtils.copyNonNullProperties(account,accountEdit);
 
         return this.saveAccount(accountEdit);
+    }
+
+    @Override
+    public Account saveUserOAuth(LinkedInUserInfo linkedInUserInfo) {
+        Account account = new Account();
+        account.setUsername(linkedInUserInfo.getEmail());
+        account.setEnabled(true);
+        account.setAccountNotLocked(true);
+        account.setAccountNotExpired(true);
+        account.setCredentialNotExpired(true);
+        Set<Role> roleList = roleService.findRoleByName("USER");
+        account.setRoleList(roleList);
+
+        return this.saveAccount(account);
     }
 
     @Override
