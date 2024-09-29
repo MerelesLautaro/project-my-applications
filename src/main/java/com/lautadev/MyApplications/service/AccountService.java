@@ -1,11 +1,12 @@
 package com.lautadev.MyApplications.service;
 
 import com.lautadev.MyApplications.model.Account;
-import com.lautadev.MyApplications.model.LinkedInUserInfo;
+import com.lautadev.MyApplications.model.GoogleUserInfo;
 import com.lautadev.MyApplications.model.Role;
 import com.lautadev.MyApplications.repository.IAccountRepository;
 import com.lautadev.MyApplications.throwable.EntityNotFoundException;
 import com.lautadev.MyApplications.util.NullAwareBeanUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -72,9 +73,11 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Account saveUserOAuth(LinkedInUserInfo linkedInUserInfo) {
+    public Account saveUserOAuth(GoogleUserInfo googleUserInfo) {
         Account account = new Account();
-        account.setUsername(linkedInUserInfo.getEmail());
+        account.setUsername(googleUserInfo.getEmail());
+        String randomPassword = RandomStringUtils.randomAlphanumeric(12);
+        account.setPassword(randomPassword);
         account.setEnabled(true);
         account.setAccountNotLocked(true);
         account.setAccountNotExpired(true);

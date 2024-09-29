@@ -1,7 +1,7 @@
 package com.lautadev.MyApplications.service;
 
 import com.lautadev.MyApplications.model.Account;
-import com.lautadev.MyApplications.model.LinkedInUserInfo;
+import com.lautadev.MyApplications.model.GoogleUserInfo;
 import com.lautadev.MyApplications.model.UserSec;
 import com.lautadev.MyApplications.repository.IUserSecRepository;
 import com.lautadev.MyApplications.util.JWTUtils;
@@ -18,8 +18,6 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -55,19 +53,19 @@ public class CustomOidcUserService extends OidcUserService {
     }
 
     private OidcUser processOidcUser(OidcUserRequest userRequest, OidcUser oidcUser) {
-        LinkedInUserInfo linkedInUserInfo = new LinkedInUserInfo(oidcUser.getAttributes());
+        GoogleUserInfo googleUserInfo = new GoogleUserInfo(oidcUser.getAttributes());
 
-        Optional<UserSec> accountOptional = userSecRepository.findByEmail(linkedInUserInfo.getEmail());
+        Optional<UserSec> accountOptional = userSecRepository.findByEmail(googleUserInfo.getEmail());
         Account account;
 
-        if (!accountOptional.isPresent()) {
-            account = accountService.saveUserOAuth(linkedInUserInfo);
+        if (accountOptional.isEmpty()) {
+            account = accountService.saveUserOAuth(googleUserInfo);
 
             if (account.getId() != null) {
                 UserSec userSec = new UserSec();
-                userSec.setEmail(linkedInUserInfo.getEmail());
-                userSec.setName(linkedInUserInfo.getFirstName());
-                userSec.setLastname(linkedInUserInfo.getLastName());
+                userSec.setEmail(googleUserInfo.getEmail());
+                userSec.setName(googleUserInfo.getName());
+                userSec.setLastname(googleUserInfo.getLastname());
                 userSec.setAccount(account);
 
                 userSecService.saveUser(userSec);
